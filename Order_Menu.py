@@ -1,26 +1,41 @@
-import pandas
+import warnings, pandas
 
+class Order:
+    def __init__(self, size, type, quantity, price):
+        self.size = size
+        self.type = type
+        self.quantity = quantity
+        self.price = price
+
+warnings.simplefilter(action='ignore', category=FutureWarning)
 
 def start():
-    print("\nThis is the order menu, where you can view our menu and the orders we need to respond to.\n")
-    print("Select an option:")
-    print("1. Check Orders")
-    print("2. Check Menu")
-    print("3. Return to Main Menu\n")
+    order = []
+    pizza_menu = pandas.read_csv("data/types.csv")
+    print(pizza_menu[["Type", "Size", "Price"]])
     while True:
+        print("\nWhat kind of pizza do you want?\n")   
         selection = int(input(">> "))
-        if selection == 1:
-            print("1")
-        elif selection == 2:
-            pizza_menu = pandas.read_csv("data/types.csv")
-            print(pizza_menu)
-        elif selection == 3:
-            print("\nWelcome to our Pizzaria!\n")
-            print("Select an option:")
-            print("1. Order")
-            print("2. Checkout")
-            print("3. Inventory")
-            print("4. Exit\n")
-            break
+        if selection > len(pizza_menu)-1 or selection < 0:
+            print("Invalid selection")
+            continue
+        size = pizza_menu.loc[selection][1]
+        ptype = pizza_menu.loc[selection][0]
+        quantity = int(input(f"How many {size} {ptype} Pizzas would you like? "))
+        price = pizza_menu.loc[selection][2] * quantity
+        if quantity >= 1:
+            order.append(Order(size, ptype, quantity, price))
+        else: 
+            continue
+        print("Add another type of pizza? (Y/N)")
+        yn = input(">> ")
+        if yn.lower() == "y":
+            continue
         else:
-            print("Invalid Selection\n")
+            break
+    for i in order:
+        if i.quantity == 1:
+            print(i.quantity, i.size, i.type, "Pizza for","$"+str(i.price))
+        elif i.quantity >= 2:
+            print(i.quantity, i.size, i.type, "Pizzas for","$"+str(i.price))
+    return order
