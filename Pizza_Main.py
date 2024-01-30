@@ -5,15 +5,15 @@ Author: Why would I want to claim responsibility for the this?
 """
 
 import Order_Menu, Checkout_Menu, Inventory_Menu
-
+from os import system
 order = []
 while True:
+    system('cls')
     print("\nWelcome to our Pizzaria!\n")
     print("Select an option:")
     print("1. Order")
     print("2. Checkout")
-    print("3. Inventory")
-    print("4. Exit\n")
+    print("3. Exit\n")
     selection = int(input(">> "))
     if selection == 1:
         order = Order_Menu.start()
@@ -23,9 +23,8 @@ while True:
         else:
             print("Please order something before chechout")
     elif selection == 3:
-        Inventory_Menu.start()
-    elif selection == 4:
         print("Hope we see you soon!")
         break
     else:
         print("Invalid Selection\n")
+        input("(Press Enter to Continue)")

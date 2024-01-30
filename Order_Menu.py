@@ -12,8 +12,8 @@ warnings.simplefilter(action='ignore', category=FutureWarning)
 def start():
     order = []
     pizza_menu = pandas.read_csv("data/types.csv")
-    print(pizza_menu[["Type", "Size", "Price"]])
     while True:
+        print(pizza_menu[["Type", "Size", "Price"]])
         print("\nWhat kind of pizza do you want?\n")   
         selection = int(input(">> "))
         if selection > len(pizza_menu)-1 or selection < 0:
@@ -35,7 +35,10 @@ def start():
             break
     for i in order:
         if i.quantity == 1:
+            i.price = round(i.price, 2)
             print(i.quantity, i.size, i.type, "Pizza for","$"+str(i.price))
         elif i.quantity >= 2:
+            i.price = round(i.price, 2)
             print(i.quantity, i.size, i.type, "Pizzas for","$"+str(i.price))
+    input("(Press Enter to Continue)")
     return order
