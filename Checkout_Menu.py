@@ -19,6 +19,7 @@ def start(order):
     total = round(total, 2)
     print("For a total of: $"+str(total))
     payment(total)
+    save(order, total)
     order = []
     input("(Press Enter to Continue)")
 def payment(total):
@@ -37,3 +38,9 @@ def payment(total):
             break
         else:
             print("Enter a valid response")
+def save(order, total):
+    with open("Pizza.dat", "a") as orders:
+        for pizza in order:
+            orders.write(f"{pizza.quantity} {pizza.size} {pizza.type} pizza(s) for {pizza.price}")
+            orders.write("\n")
+        orders.write(f"For a total of ${total} \n")

@@ -4,7 +4,7 @@ Description: A pizzaria simulator
 Author: Why would I want to claim responsibility for the this?
 """
 
-import Order_Menu, Checkout_Menu, Inventory_Menu
+import Order_Menu, Checkout_Menu
 from os import system
 order = []
 while True:
